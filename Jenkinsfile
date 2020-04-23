@@ -6,5 +6,11 @@ pipeline {
                 sh 'make lint'
             }
         }
+
+        stage('Build Docker Images') {
+            steps {
+                sh 'make build'
+            }
+        }
     }
 }
