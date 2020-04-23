@@ -5,3 +5,5 @@ lint:
 build: 
 	docker build -t sergiopichardo/nginx-blue . 
 	
+upload: 
+	docker push sergiopichardo/nginx-blue
