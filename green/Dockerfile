@@ -1,0 +1,7 @@
+FROM nginx 
+
+LABEL Name="nginx" Version="v1" Color="green"
+
+COPY index.html /usr/share/nginx/html
+
+EXPOSE 80
