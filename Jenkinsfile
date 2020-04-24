@@ -11,8 +11,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     
-                    sh "echo ${env.FULL_NAME}"
-                    // sh 'docker login -u $DOCKERHUB_USERNAME --password-stdin < ~/dockerhub_password'
+                    sh "echo ${env.DOCKERHUB_PASSWORD}"
+                    sh "docker login -u $DOCKERHUB_USERNAME --password-stdin < ${env.DOCKERHUB_PASSWORD}"
                     // sh 'make build'
                 }
             }
