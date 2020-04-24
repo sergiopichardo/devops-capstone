@@ -14,18 +14,19 @@ pipeline {
 
         stage('Build Docker and Push Image') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", 
-                    usernameVariable: "DOCKERHUB_USERNAME", 
-                    passwordVariable: "DOCKERHUB_PASSWORD")]) {
-                    sh "docker login"
-
-                    docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
-                        dockerImage = docker.build("${DOCKER_IMAGE}")
-                        dockerImage.push()
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", 
+                        usernameVariable: "DOCKERHUB_USERNAME", 
+                        passwordVariable: "DOCKERHUB_PASSWORD")]) {
+                        sh "docker login -u ${DOCKERHUB_USERNAME} --password-stdin ${DOCKERHUB_PASSWORD}"
+                        
+                        docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
+                            dockerImage = docker.build("${DOCKER_IMAGE}")
+                            dockerImage.push()
+                        }
                     }
                 }
-                
             }
         }
     }
