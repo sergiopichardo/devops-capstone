@@ -19,7 +19,8 @@ pipeline {
                         credentialsId: "${DOCKERHUB_CREDENTIALS}", 
                         usernameVariable: "DOCKERHUB_USERNAME", 
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
-                        sh "cat $SECRET_FILE | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+                        sh "echo $DOCKERHUB_USERNAME $DOCKERHUB_PASSWORD"
+                        // sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
                         
                         // remove later
                         // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
