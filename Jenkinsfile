@@ -19,6 +19,7 @@ pipeline {
                         credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", 
                         usernameVariable: "DOCKERHUB_USERNAME", 
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
+                        sh "pass init ${env.PASS_KEY}"
                         sh "echo ${env.DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
                         
                         // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
