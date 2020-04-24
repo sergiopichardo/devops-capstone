@@ -22,6 +22,7 @@ pipeline {
                         sh "pass init ${env.PASS_KEY}"
                         sh "echo ${env.DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
                         
+                        // remove later
                         // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
                         //     dockerImage = docker.build("${DOCKER_IMAGE}")
                         //     dockerImage.push()
