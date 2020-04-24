@@ -1,7 +1,7 @@
 pipeline {
     environment {
         DOCKERHUB_REGISTRY = "https://hub.docker.com"
-        DOCKERHUB_CREDENTIALS_ID = "dockerhub"
+        DOCKERHUB_CREDENTIALS = "DOCKERHUB_CREDENTIALS"
         DOCKER_IMAGE = "sergiopichardo/nginx-blue"
     }
     agent any 
@@ -16,10 +16,10 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(
-                        credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", 
+                        credentialsId: "${DOCKERHUB_CREDENTIALS}", 
                         usernameVariable: "DOCKERHUB_USERNAME", 
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
-                        sh "echo ${env.DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
+                        sh "cat $SECRET_FILE | docker login -u $DOCKERHUB_USERNAME --password-stdin"
                         
                         // remove later
                         // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
