@@ -7,3 +7,6 @@ build:
 	
 upload: 
 	docker push sergiopichardo/nginx-blue
+
+login: 
+	docker login
