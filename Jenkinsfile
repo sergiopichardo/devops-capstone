@@ -21,10 +21,10 @@ pipeline {
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
                         sh "echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
                         
-                        docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
-                            dockerImage = docker.build("${DOCKER_IMAGE}")
-                            dockerImage.push()
-                        }
+                        // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
+                        //     dockerImage = docker.build("${DOCKER_IMAGE}")
+                        //     dockerImage.push()
+                        // }
                     }
                 }
             }
