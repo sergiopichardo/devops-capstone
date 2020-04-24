@@ -9,7 +9,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD'])) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     sh 'docker login -u $DOCKERHUB_USERNAME --password-stdin < ~/dockerhub_password'
                     // sh 'make build'
                 }
