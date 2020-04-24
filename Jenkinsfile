@@ -21,7 +21,7 @@ pipeline {
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
                         sh "echo $DOCKERHUB_USERNAME $DOCKERHUB_PASSWORD"
                         sh "echo $DOCKERHUB_PASSWORD >> dockerhub_password_file"
-                        sh "cat dockerhub_password_file | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+                        sh "cat dockerhub_password_file | docker login -u $DOCKERHUB_USERNAME --password-stdin --priviledged=true"
                         
                         // remove later
                         // docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
