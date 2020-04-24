@@ -10,7 +10,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                    echo 'sudo ls ./'
+                    sh 'sudo ls /var/bin/jenkins'
                     // sh 'docker login -u $DOCKERHUB_USERNAME --password-stdin < ~/dockerhub_password'
                     // sh 'make build'
                 }
