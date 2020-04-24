@@ -21,7 +21,7 @@ pipeline {
                         passwordVariable: "DOCKERHUB_PASSWORD")]) {
 
                         docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
-                            // sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                            sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                             dockerImage = docker.build("${DOCKER_IMAGE}")
                             dockerImage.push()
                         }
