@@ -1,9 +1,10 @@
 pipeline {
-    agent any 
     environment {
-        DOCKERHUB_USERNAME=credentials('DOCKERHUB_USERNAME')
-        DOCKERHUB_PASSWORD=credentials('DOCKERHUB_PASSWORD')
+        DOCKERHUB_REGISTRY = "https://hub.docker.com"
+        DOCKERHUB_CREDENTIALS_ID = "dockerhub"
+        DOCKER_IMAGE = "sergiopichardo/nginx-blue"
     }
+    agent any 
     stages {
         stage('Lint HTML and Dockerfile') {
             steps {
@@ -11,12 +12,26 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Docker and Push Image') {
             steps {
-                sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                sh 'make build'
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", 
+                        usernameVariable: "DOCKERHUB_USERNAME", 
+                        passwordVariable: "DOCKERHUB_PASSWORD")]) {
+
+                        docker.withRegistry('', "$DOCKERHUB_CREDENTIALS_ID") {
+                            sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                            dockerImage = docker.build("${DOCKER_IMAGE}")
+                            dockerImage.push()
+                        }
+                        
+                    }
+                }
             }
         }
     }
 }
+
+
 
