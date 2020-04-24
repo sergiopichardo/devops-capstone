@@ -1,5 +1,9 @@
 pipeline {
     agent any 
+    environement {
+        DOCKERHUB_USERNAME=credentials('DOCKERHUB_USERNAME')
+        DOCKERHUB_PASSWORD=credentials('DOCKERHUB_PASSWORD')
+    }
     stages {
         stage('Lint HTML and Dockerfile') {
             steps {
@@ -9,7 +13,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker login'
+                sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                 sh 'make build'
             }
         }
