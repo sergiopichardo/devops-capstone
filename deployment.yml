@@ -2,39 +2,34 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-devops-capstone
-  labels:
-    app: nginx-devops-capstone
-    color: blue
 spec:
   selector:
     matchLabels:
-      app: nginx-devops-capstone
+      run: nginx-devops-capstone
   replicas: 2
   template:
     metadata:
       labels:
-        app: nginx-devops-capstone
+        run: nginx-devops-capstone
         color: blue
     spec:
       containers:
       - name: nginx-devops-capstone
         image: sergiopichardo/nginx-blue
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 --- 
 apiVersion: v1
 kind: Service
 metadata:
-  name: load-balancer-devops-capstone
-  labels: 
-    name: load-balancer-devops-capstone
+  name: nginx-devops-capstone
+  labels:
+    run: nginx-devops-capstone
     color: blue
 spec:
-  selector:
-    app: load-balancer-devops-capstone
-    color: blue
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: LoadBalancer
+  - port: 80
+    protocol: TCP
+  selector:
+    run: nginx-devops-capstone
+    color: blue
