@@ -1,7 +1,10 @@
 # Udacity Devops Engineer Nano-degree Capstone Project
 
+In this capstone project I implemented a CI/CD pipeline using Github, Jenkins, Amazon Web Services, Docker and Kubernetes. The goal of the project was to launch a simple nginx server into a Kubernetes pod using a blue/green app deployment approach. Two deployments are launched simultaneously with one load balancing service. When we want to switch to the green segment of the deployment, the service config file is updated using a label/selector method. 
+
 ## Initial Setup
 ![alt Project Pipeline](https://github.com/sergiopichardo/devops-capstone/blob/master/diagrams/initial-setup.png)
+
 
 ## Deployments
 ![alt Project Initial](https://github.com/sergiopichardo/devops-capstone/blob/master/diagrams/deployments.png)
@@ -9,6 +12,7 @@
 
 ## DevOps Architecture
 ![alt Project Pipeline](https://github.com/sergiopichardo/devops-capstone/blob/master/diagrams/pipeline.png)
+
 
 <!-- Add dependencies needed to be installed -->
 ### Jenkins Dependencies 
@@ -27,6 +31,7 @@
 - **IAM user**: setup an IAM user and give it required permissions. 
 - **Energy**: Coffee or Energy is recommended, but not required :D
 
+
 ## Setup Cluster Instructions 
 <!-- Creating Cluster with eksctl -->
 Before launching pipeline you must create eks cluster. Remember this process takes from 10 to 15 miniutes to complete as cloudformation has to provision all resources.
@@ -37,11 +42,27 @@ Before launching pipeline you must create eks cluster. Remember this process tak
 $ eksctl create cluster --name <cluster_name> --nodes 1 --region <region>
 ```
 
+
+### Change kubectl Context 
+So you can interact with eks api from your local machine or EC2 instance.
+```sh
+aws eks --region us-east-1 update-kubeconfig --name devops-cluster
+```
+
+
 ### Authenticate to AWS using aws-iam-authenticator
 This command will pre-generate certificate, private key, and kubeconfig files for the server.
 ```sh
 $ aws-iam-authenticator init
 ```
+
+
+### IAM Authentication Errors
+In case of errors check which IAM role you have setup for your current workspace. 
+```
+$ aws sts get-caller-identity
+```
+
 
 ## Run Pipeline Instructions
 <!-- Explain how to run pipeline -->
