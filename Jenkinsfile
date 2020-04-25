@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 withAWS(credentials: "$AWS_CREDENTIALS", region: "$REGION") { 
-                    sh "aws eks --region us-east-1 update-kubeconfig --name devops-capstone-cluster"
+                    sh "aws eks --region us-east-1 update-kubeconfig --name devops-cluster"
                     sh "kubectl apply -f blue-deployment.yml"
                     sh "kubectl apply -f green-deployment.yml"
                     sh "kubectl apply -f service.yml"
