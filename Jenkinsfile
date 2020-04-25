@@ -1,10 +1,10 @@
 pipeline {
     environment {
-        DOCKERHUB_REGISTRY = "https://hub.docker.com"
-        DOCKERHUB_CREDENTIALS = "DOCKERHUB_CREDENTIALS"
-        DOCKER_IMAGE = "sergiopichardo/nginx-blue"
-        REGION "us-east-1"
-        AWS_CREDENTIALS = "aws_credentials"
+        DOCKERHUB_REGISTRY="https://hub.docker.com"
+        DOCKERHUB_CREDENTIALS="DOCKERHUB_CREDENTIALS"
+        DOCKER_IMAGE="sergiopichardo/nginx-blue"
+        REGION="us-east-1"
+        AWS_CREDENTIALS="aws_credentials"
     }
     agent any 
     stages {
