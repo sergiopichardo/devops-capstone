@@ -1,3 +1,4 @@
-deployment.yml 
+temp/
 nginx-deployment.yml
-temp
+service.yml
+kubernetes/
