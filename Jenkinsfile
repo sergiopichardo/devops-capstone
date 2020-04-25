@@ -37,9 +37,9 @@ pipeline {
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 sh "echo 'Deploy to kubernetes cluster'"
+                sh "kubectl apply -f deployment.yml"
             }
         }
-
     }
 }
 
