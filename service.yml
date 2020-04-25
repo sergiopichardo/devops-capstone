@@ -11,6 +11,6 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    run: load-balancer
+    run: nginx-blue
     color: blue
   type: LoadBalancer
