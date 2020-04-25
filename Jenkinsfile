@@ -3,6 +3,8 @@ pipeline {
         DOCKERHUB_REGISTRY = "https://hub.docker.com"
         DOCKERHUB_CREDENTIALS = "DOCKERHUB_CREDENTIALS"
         DOCKER_IMAGE = "sergiopichardo/nginx-blue"
+        REGION "us-east-1"
+        AWS_CREDENTIALS = "aws_credentials"
     }
     agent any 
     stages {
@@ -36,10 +38,12 @@ pipeline {
 
         stage('Deploy to Kubernetes Cluster') {
             steps {
-                sh "aws eks --region us-east-1 update-kubeconfig --name devops-capstone-cluster"
-                sh "kubectl apply -f deployment.yml"
+                withAWS(credentials: "$AWS_CREDENTIALS", region: "$REGION") { 
+                    sh "aws eks --region us-east-1 update-kubeconfig --name devops-capstone-cluster"
+                    sh "kubectl apply -f deployment.yml"
+                }
             }
-        }
+        }        
     }
 }
 
