@@ -24,33 +24,62 @@
 - **kubernetes**: kubelet, kubeadm, kubectl, and kubernetes-cni.
 - **eksctl**: Create kubernetes cluster on aws.
 - **aws-iam-authenticator**: Authenticate your kubernetes cluster to AWS.
-- **coffee**: for energy lol
+- **IAM user**: setup an IAM user and give it required permissions. 
+- **Energy**: Coffee or Energy is recommended, but not required :D
 
-## 1. Setup Cluster Instructions 
+## Setup Cluster Instructions 
 <!-- Creating Cluster with eksctl -->
-Run setup pipeline by switching to setup branch
+Before launching pipeline you must create eks cluster. Remember this process takes from 10 to 15 miniutes to complete as cloudformation has to provision all resources.
+
+*NOTE: Some regions do not support EKS. I used us-east-1 region.*
+
 ```sh
-$ git checkout setup-cluster
+$ eksctl create cluster --name <cluster_name> --nodes 1 --region <region>
 ```
 
-## 2. Run Pipeline Instructions
+### Authenticate to AWS using aws-iam-authenticator
+```sh
+$ aws-iam-authenticator init
+```
+
+## Run Pipeline Instructions
 <!-- Explain how to run pipeline -->
-```sh
-$ git checkout master 
+Login into your Jenkins server, authenticate to github, setup pipeline and 
+launch deployments and service. 
+
+## Update Deployment Instructions
+Update load balancer so it points to the green pod using the label/selector strategy.
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-balancer
+  labels:
+    run: load-balancer
+    color: green
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    run: load-balancer
+    color: green
+  type: LoadBalancer
 ```
 
-## 3. Update Deployment Instructions
-<!-- Add picture of what it should look like with index.html of different colors -->
-Run pipeline to set
+
+### Execute update using kubectl.
 ```sh
-$ git checkout green-update
+$ kubectl apply -f service.yml
 ```
 
-## 4. Remove Resources Instructions 
+## Remove Cluster Instructions 
 <!-- Display command needed -->
+```sh
+$ eksctl delete cluster --name <cluster_name>
 ```
-$ git checkout remove-cluster
-```
+
 
 ## Rubric 
 <!-- NOTE: Remember to explain that eksctl creates cloudformation script -->
