@@ -4,13 +4,13 @@ metadata:
   name: load-balancer
   labels:
     run: load-balancer
-    color: green
+    color: blue
 spec:
   ports:
   - port: 80
     targetPort: 80
     protocol: TCP
   selector:
-    run: nginx-green
-    color: green
+    run: nginx-blue
+    color: blue
   type: LoadBalancer
