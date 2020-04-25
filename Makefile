@@ -13,4 +13,4 @@ upload:
 	docker push sergiopichardo/nginx-green
 
 clean: 
-	docker system prune 
+	echo y | docker system prune 
