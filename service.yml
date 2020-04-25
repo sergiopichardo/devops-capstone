@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-balancer
+  labels:
+    run: load-balancer
+    color: blue
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    run: load-balancer
+    color: blue
+  type: LoadBalancer

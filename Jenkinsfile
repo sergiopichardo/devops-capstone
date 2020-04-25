@@ -2,7 +2,7 @@ pipeline {
     environment {
         DOCKERHUB_REGISTRY="https://hub.docker.com"
         DOCKERHUB_CREDENTIALS="DOCKERHUB_CREDENTIALS"
-        DOCKER_IMAGE="sergiopichardo/nginx-blue"
+        // DOCKER_IMAGE="sergiopichardo/nginx-blue"
         REGION="us-east-1"
         AWS_CREDENTIALS="aws_credentials"
     }
@@ -24,13 +24,18 @@ pipeline {
                         
                         sh "echo $DOCKERHUB_PASSWORD >> dockerhub_password_file"
                         sh "cat dockerhub_password_file | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+                        sh "rm -rf dockerhub_password_file"
 
                         // remove later
                         docker.withRegistry('', "$DOCKERHUB_CREDENTIALS") {
-                            dockerImage = docker.build("${DOCKER_IMAGE}")
-                            dockerImage.push()
+                            // dockerImageBlue = docker.build("${DOCKER_IMAGE_BLUE}")
+                            // dockerImageGreen = docker.build("${DOCKER_IMAGE_GREEN}")
+                            // dockerImageBlue.push()
+                            // dockerImageGreen.push()
+                            sh "make build"
+                            sh "make upload"
+
                         }
-                        sh "rm -rf dockerhub_password_file"
                     }
                 }
             }
@@ -40,7 +45,10 @@ pipeline {
             steps {
                 withAWS(credentials: "$AWS_CREDENTIALS", region: "$REGION") { 
                     sh "aws eks --region us-east-1 update-kubeconfig --name devops-capstone-cluster"
-                    sh "kubectl apply -f deployment.yml"
+                    sh "kubectl apply -f blue-deployment.yml"
+                    sh "kubectl apply -f green-deployment.yml"
+                    sh "kubectl apply -f service.yml"
+                    
                 }
             }
         }        

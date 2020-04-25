@@ -1,4 +1,3 @@
 temp/
 nginx-deployment.yml
-service.yml
 kubernetes/
