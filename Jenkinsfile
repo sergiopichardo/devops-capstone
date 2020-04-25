@@ -34,8 +34,9 @@ pipeline {
             }
         }
 
-        stage('Launch to Kubernetes Cluster') {
+        stage('Deploy to Kubernetes Cluster') {
             steps {
+                sh "aws eks --region us-east-1 update-kubeconfig --name devops-capstone-cluster"
                 sh "kubectl apply -f deployment.yml"
             }
         }
