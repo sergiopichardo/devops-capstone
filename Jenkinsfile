@@ -34,7 +34,6 @@ pipeline {
                             // dockerImageGreen.push()
                             sh "make build"
                             sh "make upload"
-
                         }
                     }
                 }
@@ -48,10 +47,15 @@ pipeline {
                     sh "kubectl apply -f blue-deployment.yml"
                     sh "kubectl apply -f green-deployment.yml"
                     sh "kubectl apply -f service.yml"
-                    
                 }
             }
-        }        
+        }
+
+        stage('Remove Docker resources') {
+            steps {
+                sh "make clean"
+            }
+        }
     }
 }
 

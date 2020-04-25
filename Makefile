@@ -11,3 +11,6 @@ build:
 upload: 
 	docker push sergiopichardo/nginx-blue
 	docker push sergiopichardo/nginx-green
+
+clean: 
+	docker system prune 
