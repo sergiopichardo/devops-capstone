@@ -22,13 +22,13 @@ pipeline {
                         
                         sh "echo $DOCKERHUB_PASSWORD >> dockerhub_password_file"
                         sh "cat dockerhub_password_file | docker login -u $DOCKERHUB_USERNAME --password-stdin"
-                        sh "rm -rf dockerhub_password_file"
 
                         // remove later
                         docker.withRegistry('', "$DOCKERHUB_CREDENTIALS") {
                             dockerImage = docker.build("${DOCKER_IMAGE}")
                             dockerImage.push()
                         }
+                        sh "rm -rf dockerhub_password_file"
                     }
                 }
             }
