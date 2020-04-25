@@ -1,5 +1,6 @@
 lint: 
-	tidy -q -e *.html
+	tidy -q -e ./blue/*.html
+	tidy -q -e ./green/*.html
 	dockerfile_lint -f Dockerfile.blue
 	dockerfile_lint -f Dockerfile.green
 
