@@ -1,4 +1,4 @@
-# Udacity Devops Engineer Nano-degree Capstone Project
+# Devops Engineer Nano-degree Capstone Project
 
 In this capstone project I implemented a CI/CD pipeline using Github, Jenkins, Amazon Web Services, Docker and Kubernetes. The goal of the project was to launch a simple nginx server into a Kubernetes pod using a blue/green app deployment approach. Two deployments are launched simultaneously with one load balancing service. When we want to switch to the green segment of the deployment, the service config file is updated using a label/selector method. 
 
